@@ -1,11 +1,13 @@
-# 使用 print() 函数打印程序日志
+# 使用 print() 函数打印应用日志
 ## 打印常量和变量
 你可以使用 `print(_:separator:terminator:)` 函数打印常量或变量的当前值：
 ```
 print("Hello, world!")
 // Prints "Hello, world!"
 ```
-`print(_:separator:terminator:)` 函数是一个全局函数，它将一个或多个值打印到适当的输出。例如，在 Xcode 中，`print(_:separator:terminator:)` 函数将其输出打印在 Xcode 的“控制台”窗格中。`print(_:separator:terminator:)` 函数的完整声明为：
+`print(_:separator:terminator:)` 函数是一个全局函数，它将一个或多个值打印到适当的输出。例如，在 Xcode 中，`print(_:separator:terminator:)` 函数将其输出打印在 Xcode 的“控制台”窗格中。
+
+`print(_:separator:terminator:)` 函数的完整声明为：
 ```
 func print(_ items: Any..., separator: String = default, terminator: String = default)
 ```
@@ -43,7 +45,7 @@ for n in 1...5 {
 ```
 separator 和 terminator 具有默认值，因此在调用此函数时可以忽略它们。
 ## 为 print() 添加更多信息
-在项目中 print 的内容有可能是打印在控制台上，有可能会写入到日志文件并在用户发送反馈给我们时获取到，以便获取项目在运行时的很多信息。而一个完备的日志系统不可能仅仅是简单的输出网络请求的状况或者是数据库存取的情况，更多的时候需要携带当前 print() 函数所在的文件名，行，列，方法名等。在 Swift 中有几个为此而生的 Literal Expression，用来解决这些问题。
+在项目中 print 的内容有可能是打印在控制台上，有可能会写入到日志文件并在用户发送反馈给我们时获取到，以便获取项目在运行时的更多信息。而一个完备的日志系统不可能仅仅是简单的输出网络请求的状况或者是数据库存取的情况，更多的时候需要携带当前 print() 函数所在的文件名，行，列，方法名等。在 Swift 中有几个为此而生的 Literal Expression，用来解决这些问题。
 
 | Literal | Type | Value |
 |:--------:|:-------:|:-------:|
@@ -68,4 +70,4 @@ func log(_ items: Any..., file: String = #file, line: Int = #line, function: 
     ...
 }
 ```
-PS: 如果觉得我写的还不错，请关注我的新浪微博[@小橘爷](http://weibo.com/yanghaoyu0225)，最新文章即时推送~
+如果觉得我写的还不错，请关注我的微博[@小橘爷](http://weibo.com/yanghaoyu0225)，最新文章即时推送~
