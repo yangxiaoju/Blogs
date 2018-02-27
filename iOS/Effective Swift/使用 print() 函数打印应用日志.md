@@ -53,6 +53,7 @@ separator 和 terminator 具有默认值，因此在调用此函数时可以忽�
 | #line | Int | 它出现的行号。 |
 | #column | Int | 它开始的列号。 |
 | #function | String | 它出现的声明的名称。 |
+
 在函数内部，#function 的值是该函数的名称，在方法中它是该方法的名称，在属性 getter 或 setter 中，它是该属性的名称，在 init 或 subscript 等特殊成员内部，它是该关键字的名称，在文件的顶层，它是当前模块的名称。
 
 当用作函数或方法参数的默认值时，special literal 的值在调用处计算默认值表达式时确定。
