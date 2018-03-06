@@ -31,7 +31,7 @@ print(1...5)
 print(1.0, 2.0, 3.0, 4.0, 5.0)
 // Prints "1.0 2.0 3.0 4.0 5.0"
 ```
-要打印由空格以外的内容分隔的 item，请传递一个 String 作为 separator。
+要打印由空格以外的内容分隔的 item，请传递一个 `String` 作为 separator。
 ```
 print(1.0, 2.0, 3.0, 4.0, 5.0, separator: " ... ")
 // Prints "1.0 ... 2.0 ... 3.0 ... 4.0 ... 5.0"
@@ -45,7 +45,7 @@ for n in 1...5 {
 ```
 separator 和 terminator 具有默认值，因此在调用此函数时可以忽略它们。
 ## 为 print() 添加更多信息
-在项目中 print 的内容有可能是打印在控制台上，有可能会写入到日志文件并在用户发送反馈给我们时获取到，以便获取项目在运行时的更多信息。而一个完备的日志系统不可能仅仅是简单的输出网络请求的状况或者是数据库存取的情况，更多的时候需要携带当前 print() 函数所在的文件名，行，列，方法名等。在 Swift 中有几个为此而生的 Literal Expression，用来解决这些问题。
+在项目中 print 的内容有可能是打印在控制台上，有可能会写入到日志文件并在用户发送反馈给我们时获取到，以便获取项目在运行时的更多信息。而一个完备的日志系统不可能仅仅是简单的输出网络请求的状况或者是数据库存取的情况，更多的时候需要携带当前 `print()` 函数所在的文件名，行，列，方法名等。在 Swift 中有几个为此而生的 Literal Expression，用来解决这些问题。
 
 | Literal | Type | Value |
 |:--------:|:-------:|:-------:|
@@ -53,8 +53,7 @@ separator 和 terminator 具有默认值，因此在调用此函数时可以忽�
 | #line | Int | 它出现的行号。 |
 | #column | Int | 它开始的列号。 |
 | #function | String | 它出现的声明的名称。 |
-
-在函数内部，#function 的值是该函数的名称，在方法中它是该方法的名称，在属性 getter 或 setter 中，它是该属性的名称，在 init 或 subscript 等特殊成员内部，它是该关键字的名称，在文件的顶层，它是当前模块的名称。
+在函数内部，`#function` 的值是该函数的名称，在方法中它是该方法的名称，在属性 getter 或 setter 中，它是该属性的名称，在 init 或 subscript 等特殊成员内部，它是该关键字的名称，在文件的顶层，它是当前模块的名称。
 
 当用作函数或方法参数的默认值时，special literal 的值在调用处计算默认值表达式时确定。
 ```
@@ -65,7 +64,7 @@ func myFunction() {
     logFunctionName() // Prints "myFunction()".
 }
 ```
-这样一来，就可以为 print() 的每次输出添加一些必要的辅助信息了。
+这样一来，就可以为 `print()` 的每次输出添加一些必要的辅助信息了。
 ```
 func log(_ items: Any..., file: String = #file, line: Int = #line, function: String = #function) {
     ...
