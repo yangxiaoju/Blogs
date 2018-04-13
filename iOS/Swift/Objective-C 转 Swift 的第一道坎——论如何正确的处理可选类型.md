@@ -1,6 +1,6 @@
 # Objective-C 转 Swift 的第一道坎——论如何正确的处理可选类型
 
-从 `Objective-C` 转 `Swift` 开发已经有一段时间了，这两门语言在整体的理念上差异还是蛮大的，在这之中可选类型的处理是每一个使用 `Swift` 的开发者每天都要面临的问题，理解并正确处理好可选类型对于写出高质量的 `Swift` 代码和保证 `iOS` 项目的健壮性都是至关重要的。
+从 `Objective-C` 转 `Swift` 开发已经有一段时间了，这两门语言在整体的理念上差异还是蛮大的。在这之中，可选类型的处理是每一个使用 `Swift` 的开发者每天都要面临的问题，理解并正确处理好可选类型对于写出高质量的 `Swift` 代码和保证 `iOS` 项目的健壮性都是至关重要的。
 
 ## 可选类型
 
@@ -10,13 +10,16 @@
 
 在 `Objective-C` 中不存在可选类型的概念，`Objective-C` 中最接近的东西就是 `nil`, `nil` 的意思是“没有有效的对象”。但是，这只适用于对象——它不适用于结构、基本数据类型或枚举值。对于这些类型，`Objective-C` 方法通常会返回一个特殊值（如 `NSNotFound`）来指示缺少值。这种方法假设方法的调用者知道有一个特殊的值来测试，并记得检查它。`Swift` 的可选值可以让你指出可能为 `nil` 的任何类型的值，而不需要特殊的常量。
 
-例如：
+例如，`Swift` 的 `Int` 类型有一个初始化方法，它试图将一个 `String` 值转换成一个 `Int` 值。但是，并不是每个字符串都可以转换成一个整数。字符串 "123" 可以转换为数字值 123，但字符串 "Hello, world" 没有一个明显的数值要转换。
+
+下面的例子使用初始化方法来尝试将一个字符串转换为一个 `Int`：
 
 ```
-var serverResponseCode: Int? = 404
+let possibleNumber = "123"
+let convertedNumber = Int(possibleNumber)
+// convertedNumber 被推断为 "Int?" 类型或 “可选的 Int”
 ```
-
-可选的 `Int` 被写为 `Int?`，而不是 `Int`。问号表示它所包含的值是可选的，这意味着它可能包含一个 `Int` 值，或者它可能根本不包含任何值。
+因为初始化方法可能会失败，所以它返回一个可选的 `Int`，而不是一个 `Int`。可选的 `Int` 被写为 `Int?`，而不是 `Int`。问号表示它所包含的值是可选的，这意味着它可能包含一个 `Int` 值，或者它可能根本不包含任何值。
 
 ### nil
 
@@ -44,18 +47,19 @@ var surveyAnswer: String?
 
 ### 强制解包
 
-可以通过在可选值名称的末尾添加感叹号（`!`）来访问其内部值。这被称为强制解包一个可选的值。
+一旦确定可选值包含值，可以通过在可选值名称的末尾添加感叹号（`!`）来访问其内部值。这被称为强制解包一个可选的值。
 
 ```
-print("serverResponseCode is (\serverResponseCode!)")
+print("convertedNumber has an integer value of \(convertedNumber!).")
 ```  
 
 试着用 `!` 访问不存在的可选值会触发运行时错误。在使用强制解包之前，一定要确保一个可选值不为 `nil`
 
 ```
-if serverResponseCode != nil {
-    print("serverResponseCode is (\serverResponseCode!)")
+if convertedNumber != nil {
+    print("convertedNumber has an integer value of \(convertedNumber!).")
 }
+// 打印 "convertedNumber has an integer value of 123."
 ```
 
 ### 可选绑定
@@ -65,18 +69,19 @@ if serverResponseCode != nil {
 使用 `if` 语句编写一个可选绑定，如下所示： 
 
 ```
-if let code = serverResponseCode {
-    print("serverResponseCode is (\code)")
+if let actualNumber = Int(possibleNumber) {
+    print("\"\(possibleNumber)\" has an integer value of \(actualNumber)")
 } else {
-    print("serverResponseCode is nil")
+    print("\"\(possibleNumber)\" could not be converted to an integer")
 }
+// 打印 ""123" has an integer value of 123"
 ```
 
-如果转换成功，那么 `code` 常量可以在 `if` 语句的第一个分支中使用。它已经被初始化为包含在非可选的值中，所以没有必要使用 `!` 后缀来访问它的值。
+如果转换成功，那么 `actualNumber` 常量可以在 `if` 语句的第一个分支中使用。它已经被初始化为包含在非可选的值中，所以没有必要使用 `!` 后缀来访问它的值。
 
-你可以使用可选绑定的常量和变量。如果你想在 `if` 语句的第一个分支内操作 `code` 的值，你可以写 `if var code`，使得可选值作为一个变量而非常量。
+你可以使用可选绑定的常量和变量。如果你想在 `if` 语句的第一个分支内操作 `actualNumber` 的值，你可以写 `if var actualNumber`，使得可选值作为一个变量而非常量。
 
-你可以根据需要在单个 `if` 语句中包含尽可能多的可选绑定和布尔条件，并用逗号分隔。如果可选绑定中的任何值为 `nil`，或者任何布尔条件的计算结果为 `false`，则整个 `if` 语句的条件被认为是错误的。一下 `if` 语句是等价的：
+你可以根据需要在单个 `if` 语句中包含尽可能多的可选绑定和布尔条件，并用逗号分隔。如果可选绑定中的任何值为 `nil`，或者任何布尔条件的计算结果为 `false`，则整个 `if` 语句的条件被认为是错误的。以下 `if` 语句是等价的：
 
 ```
 if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
@@ -126,7 +131,7 @@ a != nil ? a! : b
 
 上面的代码使用三元条件运算符，并强制解包（`a!`）来访问 `a` 来访问 `a` 不为 `nil` 时包装的值，否则返回 `b`。Nil-Coalescing 运算符提供了一种更简洁的方式来以简洁易懂的形式封装这个条件检查和解包。
 
-> 注意：如果 `a` 的值不是 `nil`，则不计算 `b` 的值。这就是所谓的短路计算。
+如果 `a` 的值不是 `nil`，则不计算 `b` 的值。这就是所谓的短路计算。
 
 ### 可选链
 
@@ -146,7 +151,7 @@ class Residence {
 }
 ```
 
-创建一个新的 `Person` 示例，由于是它是可选类型，所以它的 residence 属性默认初始化为 `nil`。
+创建一个新的 `Person` 示例，由于是它是可选类型，所以它的 `residence` 属性默认初始化为 `nil`。
 
 ```
 let john = Person()
@@ -213,11 +218,11 @@ testScores["Brian"]?[0] = 72
 
 ## Swift 中处理可选类型的建议
 
-因为 `Objective-C` 中的 `nil` 对于开发者来说是相对安全的，向集合类型中添加 `nil` 会造成异常，但给 `nil` 发送消息并不会有任何的问题(当然业务上可能会有问题)。但在 `Swift` 中，就像大多数其他语言一样，向 `nil` 发送消息会造成 `crash`。而且作为典型的现代强类型语言，可选类型的加入更是给之前长期使用 `Objective-C` 这种算是弱类型语言的 `iOS` 开发者带来了困扰。再此给开发者们一些处理可选类型的建议：
+因为 `Objective-C` 中的 `nil` 对于开发者来说是相对安全的，虽然向集合类型中添加 `nil` 会造成异常，但是对 `nil` 发送消息并不会有任何的问题(当然业务上可能会有问题)。但在 `Swift` 中，就像大多数其他语言一样，向 `nil` 发送消息会造成 `crash`。而且作为典型的现代强类型语言，可选类型的加入更是给之前长期使用 `Objective-C` 这种算是弱类型语言的 `iOS` 开发者带来了困扰。再此给开发者们一些处理可选类型的建议：
 
 ### 尽可能避免声明可选类型的实例
 
-除非一些必要的场景（例如代理模式），尽可能的使用非可选类型，包括但不限于属性声明和方法参数。
+除非一些必要的场景（例如代理模式，过程中对象可能为 `nil`），尽可能的使用非可选类型，包括但不限于属性声明和方法参数。
 
 ### 多使用可选绑定、Nil-Coalescing 运算符和可选链处理可选类型，避免使用强制解包和隐式解包
 
@@ -243,15 +248,22 @@ if let serverResponseCode = serverResponseCode {
 
 ## Objective-C 和 Swift 混编时如何正确的处理可选类型
 
-除了一些在最近一段时间刚刚从零启动的项目，绝大多数的项目都是处于从 `Objective-C` 向 `Swift` 代码过渡的阶段，这里面涉及到了对原有 `Objective-C` 代码进行可选非可选区分的问题。如果读过一些进行过适配 `Swift` 的 `Objective-C` 写的三方库的源代码之后会发现，很多都用到了这样的一对宏：
+除了一些在最近一段时间刚刚从零启动的项目，绝大多数的项目都是处于从 `Objective-C` 向 `Swift` 代码过渡的阶段，这里面涉及到了对原有 `Objective-C` 代码进行可选非可选区分的问题。
+
+在 `Objective-C` 中，你使用可能为 `NULL` 的原始指针（在 `Objective-C` 中称为 `nil`）来处理对象的引用。 在 `Swift` 中，所有值（包括结构和对象引用）都保证为非 `nil` 值。 相反，你表示可以通过将值的类型包装为可选类型表示其可能缺失。 当你需要表示缺少某个值时，可以使用值 
+`nil`。 
+
+如果读过一些进行过适配 `Swift` 的 `Objective-C` 写的三方库的源代码之后会发现，很多都用到了这样的一对宏：
 
 ```
 NS_ASSUME_NONNULL_BEGIN
+
 ...
+
 NS_ASSUME_NONNULL_END
 ```
 
-这对宏的意思是，在这对宏之间声明的属性和方法，其中涉及到的类型都是非可选类型的。很多开发的同学发现这样一种简单而又粗暴的将 `Objective-C` 一键适配到 `Swift` 的方法之后，果断的在所有的头文件中的开始和结尾处加上这对宏。然后悲剧就发生了：
+这对宏的意思是，在这对宏之间声明的属性和方法，其中涉及到的类型都是非可选类型的。很多开发的同学发现这样一种简单而又粗暴的将 `Objective-C` 一键适配到 `Swift` 的方法之后，果断的在所有的头文件中的开始和结尾处加上这对宏。然后悲剧就发生了，比如：
 
 ```
 NS_ASSUME_NONNULL_BEGIN
@@ -284,6 +296,6 @@ if object.dataBase() != nil {
 @property (nonatomic, strong, nullable) DataBase *dataBase;
 ```
 
-这样就可以通知编译器这是一个可选类型属性，该有的一些提示和处理也会由编译器来提供。
+这样就可以通知编译器这是一个可选类型属性，该有的一些提示和处理也会由编译器来提供。从而避免了 `release` 之后出现线上 `crash` 的悲剧。
 
 > 如果觉得我写的还不错，请关注我的微博[@小橘爷](http://weibo.com/yanghaoyu0225)，最新文章即时推送~
