@@ -115,7 +115,7 @@ class ThirdViewController: UIViewController {
 ```   
 @objc private func buttonClick() { [weak self] in 
     thirdViewController.closure = {
-        self.test()
+        self?.test()
     }
     navigationController?.pushViewController(thirdViewController, animated: true)
 }
@@ -147,7 +147,7 @@ SecondViewController-被释放了
 ThirdViewController-被释放了
 ```
 
-在实际的项目中，可能会导致一些问题，闭包中捕获的 `self` 是 `weak` 的，有可能在闭包执行的过程中就被释放了，导致闭包中的一部分方法被执行了而一部分没有，应用的状态因此变得不一致。于是这个时候就要用到 `Weak-Strong Dance` 了。
+在实际的项目中，这可能会导致一些问题，闭包中捕获的 `self` 是 `weak` 的，有可能在闭包执行的过程中就被释放了，导致闭包中的一部分方法被执行了而一部分没有，应用的状态因此变得不一致。于是这个时候就要用到 `Weak-Strong Dance` 了。
 
 既然知道了 `self` 在闭包中成为了可选类型，那么除了可选链，还可以使用可选绑定来处理可选类型：
 
