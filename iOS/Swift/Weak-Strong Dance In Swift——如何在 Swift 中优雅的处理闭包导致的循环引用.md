@@ -113,8 +113,8 @@ class ThirdViewController: UIViewController {
 这说明闭包已经引起了循环引用问题，导致第二个控制器没能被释放（内存泄漏）。正是因为闭包会导致循环引用，所以在闭包中调用对象内部的方法时，都要显式的使用 `self`，提醒我们要注意可能引起的内存泄漏问题。与 `Objective-C` 不同的是，我们不需要在每一次使用闭包之前再繁琐的写上 `__weak typeof(self) weakSelf = self;` 了，取而代之的是捕获列表的概念：
 
 ```   
-@objc private func buttonClick() { [weak self] in 
-    thirdViewController.closure = {
+@objc private func buttonClick() { 
+    thirdViewController.closure = { [weak self] in 
         self?.test()
     }
     navigationController?.pushViewController(thirdViewController, animated: true)
@@ -152,8 +152,8 @@ ThirdViewController-被释放了
 既然知道了 `self` 在闭包中成为了可选类型，那么除了可选链，还可以使用可选绑定来处理可选类型：
 
 ```
-@objc private func buttonClick() { [weak self] in 
-    thirdViewController.closure = {
+@objc private func buttonClick() { 
+    thirdViewController.closure = { [weak self] in 
         if let strongSelf = self {
             strongSelf.test()
         } else {
@@ -167,8 +167,8 @@ ThirdViewController-被释放了
 但这样总是会让我们在闭包中的代码多出两句甚至更多，于是还有更优雅的方法，就是使用 `guard` 语句：
 
 ```
-@objc private func buttonClick() { [weak self] in 
-    thirdViewController.closure = {
+@objc private func buttonClick() { 
+    thirdViewController.closure = { [weak self] in 
         guard let strongSelf = self else { return } 
         strongSelf.test()
     }
@@ -181,8 +181,8 @@ ThirdViewController-被释放了
 当然，有人看到这里会说，每次都要使用 `strongSelf` 来调用 `self` 的方法，好烦啊……那么这一点还是可以进一步被优化的，`Swift` 与 `Objective-C` 不同，是可以使用部分关键字来声明变量的，于是我们可以：
 
 ```
-@objc private func buttonClick() { [weak self] in 
-    thirdViewController.closure = {
+@objc private func buttonClick() { 
+    thirdViewController.closure = { [weak self] in 
         guard let `self` = self else { return } 
         self.test()
     }
