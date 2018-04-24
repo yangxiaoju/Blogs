@@ -2,9 +2,9 @@
 
 ## 前言
 
-iOS 开发中的布局方式，总体而言经过了三个时代。混沌初开之时，世间只有3.5英寸（iPhone 4、iPhone 4S），那个时候屏幕适配对于大多数 iOS 开发者来说并不是什么难题，用 `frame` 就能精确高效的定位。这之后，苹果发布了4英寸机型（iPhone 5、iPhone 5C、iPhone 5S），与此同时苹果也推出了 `AutoresizingMask`，用来协调子视图与父视图之间的关系。再之后，各种各样的 iPhone 和 iPad 纷纷面世，不仅仅是屏幕尺寸方面的差异，更有异形屏（iPhone X）。在此期间，苹果提出了 `AutoLayout` 技术，供开发者进行屏幕适配。
+iOS 开发中的布局方式，总体而言经过了三个时代。混沌初开之时，世间只有3.5英寸（iPhone 4、iPhone 4S），那个时候屏幕适配对于大多数 iOS 开发者来说并不是什么难题，用 frame 就能精确高效的定位。这之后，苹果发布了4英寸机型（iPhone 5、iPhone 5C、iPhone 5S），与此同时苹果也推出了 AutoresizingMask，用来协调子视图与父视图之间的关系。再之后，各种各样的 iPhone 和 iPad 纷纷面世，不仅仅是屏幕尺寸方面的差异，更有异形屏（iPhone X）。在此期间，苹果提出了 AutoLayout 技术，供开发者进行屏幕适配。
 
-使用 `AutoLayout` 的方法也有两种——通过 `Interface Builder` 或者纯代码。前者一直是官方文档里苹果所鼓励的，原因是苹果从最初到现在，对于 iOS 应用的想法都是小而美的，在他们的认知里，一个 APP 应该提供尽可能小的功能集，这也是为为何苹果迄今为止官方推荐的架构仍然是 MVC，官方推荐的开发方式仍是以 `StoryBoard（Size Classes）`。但是在一些项目较大的公司，`StoryBoard` 的某些特性（导致应用包过大，减缓启动速度，合并代码困难）又是不能为人所容忍的，便有了纯代码来实现 `View` 层的一群开发者（比如我）。
+使用 `AutoLayout` 的方法也有两种——通过 `Interface Builder` 或者纯代码。前者一直是苹果官方文档里所鼓励的，原因是苹果从最初到现在，对于 iOS 应用的想法都是小而美的，在他们的认知里，一个 APP 应该提供尽可能小的功能集，这也是为为何苹果迄今为止官方推荐的架构仍然是 MVC，官方推荐的开发方式仍是以 `StoryBoard（Size Classes）`。但是在一些项目较大的公司，`StoryBoard` 的某些特性（导致应用包过大，减缓启动速度，合并代码困难）又是不能为人所容忍的，便有了纯代码来实现 `View` 层的一群开发者（比如我）。
 
 如果你曾经用代码来实现 `AutoLayout`，你会发现苹果提供的 `API` 的繁琐程度令人发指，这也是 `Masonry` 这类框架被发明的原因。`Masonry` 是一个轻量级的布局框架，它使用更好的语法来封装 `AutoLayout`。`Masonry` 有自己的布局 `DSL`，它提供了一种链式的方式来描述你的 `NSLayoutConstraints`，从而得到更简洁和可读的布局代码。
 
@@ -12,7 +12,7 @@ iOS 开发中的布局方式，总体而言经过了三个时代。混沌初开�
 
 ## mas_makeConstraints:
 
-设想一个简单的例子，你想要一个视图填充它的父视图，但是在每一边间隔10个点。
+举一个简单的例子，你想要一个视图填充它的父视图，但是在每一边间隔10个点。
 
 ```
 UIView *superview = self.view;
@@ -34,18 +34,10 @@ UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, 10, 10);
 我们想要实现约束的效果，是通过 `mas_makeConstraints:` 这个方法来实现的，这个方法可以在任意 `UIView` 类及其子类上调用，说明其是一个分类方法，这也是这个方法加了 `mas_` 前缀的原因。该方法声明在 `UIView+MASAdditions.h` 文件中，先来看一下这个方法的完整声明：
 
 ```
-/**
- *  Creates a MASConstraintMaker with the callee view.
- *  Any constraints defined are added to the view or the appropriate superview once the block has finished executing
- *
- *  @param block scope within which you can build up the constraints which you wish to apply to the view.
- *
- *  @return Array of created MASConstraints
- */
 - (NSArray *)mas_makeConstraints:(void(NS_NOESCAPE ^)(MASConstraintMaker *make))block;
 ```
 
-这个方法传递的参数是一个参数为 `MASConstraintMaker` 类型的 `make` 的无返回值的 `block`，而该方法的返回值则是一个数组。方法声明中我们看到了一个叫做 `NS_NOESCAPE` 的宏，`NS_NOESCAPE` 用于修饰方法中的 `block` 类型参数，作用是告诉编译器，该 `block` 在方法返回之前就会执行完毕，而不是被保存起来在之后的某个时候再执行。编译器被告知后，就会相应的进行一些优化。更详细的内容请参考 [Add @noescape to public library API](https://github.com/apple/swift-evolution/blob/master/proposals/0012-add-noescape-to-public-library-api.md)
+这个方法传递的参数是一个参数为 `MASConstraintMaker` 类型的无返回值的 `block`，而该方法的返回值则是一个数组。方法声明中我们看到了一个叫做 `NS_NOESCAPE` 的宏，`NS_NOESCAPE` 用于修饰方法中的 `block` 类型参数，作用是告诉编译器，该 `block` 在方法返回之前就会执行完毕，而不是被保存起来在之后的某个时候再执行。编译器被告知后，就会相应的进行一些优化。更详细的内容请参考 [Add @noescape to public library API](https://github.com/apple/swift-evolution/blob/master/proposals/0012-add-noescape-to-public-library-api.md)
 
 接下来是方法的实现：
 
@@ -64,16 +56,9 @@ UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, 10, 10);
 
 ### constraintMaker
 
-在这之后，创造了一个 `MASConstraintMaker` 类型的对象（`constraintMaker`、`make`），`MASConstraintMaker` 的初始化方法为：
+在这之后，创造了一个 `MASConstraintMaker` 类型的对象 `constraintMaker`，`MASConstraintMaker` 的初始化方法为：
 
 ```
-/**
- *	initialises the maker with a default view
- *
- *	@param	view	any MASConstraint are created with this view as the first item
- *
- *	@return	a new MASConstraintMaker
- */
 - (id)initWithView:(MAS_VIEW *)view;
 ```
 
@@ -116,7 +101,7 @@ UIEdgeInsets padding = UIEdgeInsetsMake(10, 10, 10, 10);
 接着，`constraintMaker` 通过 `block(constraintMaker);` 传递给了我们，而我们对它做了什么呢？
 
 ```
-make.top.equalTo(superview.mas_top).with.offset(padding.top); //with is an optional semantic filler
+make.top.equalTo(superview.mas_top).with.offset(padding.top); 
 make.left.equalTo(superview.mas_left).with.offset(padding.left);
 make.bottom.equalTo(superview.mas_bottom).with.offset(-padding.bottom);
 make.right.equalTo(superview.mas_right).with.offset(-padding.right);
@@ -149,6 +134,8 @@ make.top.equalTo(superview.mas_top).with.offset(padding.top);
     return [self constraint:nil addConstraintWithLayoutAttribute:layoutAttribute];
 }
 
+间接调用了 `constraint:addConstraintWithLayoutAttribute:` 方法：
+
 - (MASConstraint *)constraint:(MASConstraint *)constraint addConstraintWithLayoutAttribute:(NSLayoutAttribute)layoutAttribute {
     MASViewAttribute *viewAttribute = [[MASViewAttribute alloc] initWithView:self.view layoutAttribute:layoutAttribute];
     MASViewConstraint *newConstraint = [[MASViewConstraint alloc] initWithFirstViewAttribute:viewAttribute];
@@ -177,11 +164,10 @@ MASViewAttribute *viewAttribute = [[MASViewAttribute alloc] initWithView:self.vi
 首先，会初始化一个 `MASViewAttribute` 类型的对象（`viewAttribute`）,该类型的初始化方法是：
 
 ```
-/**
- *  Convenience initializer.
- */
 - (id)initWithView:(MAS_VIEW *)view layoutAttribute:(NSLayoutAttribute)layoutAttribute;
 ```
+
+实现为：
 
 ```
 - (id)initWithView:(MAS_VIEW *)view layoutAttribute:(NSLayoutAttribute)layoutAttribute {
@@ -212,13 +198,6 @@ MASViewConstraint *newConstraint = [[MASViewConstraint alloc] initWithFirstViewA
 `MASViewConstraint`的初始化方法是：
 
 ```
-/**
- *	initialises the MASViewConstraint with the first part of the equation
- *
- *	@param	firstViewAttribute	view.mas_left, view.mas_width etc.
- *
- *	@return	a new view constraint
- */
 - (id)initWithFirstViewAttribute:(MASViewAttribute *)firstViewAttribute;
 ```
 
@@ -292,7 +271,7 @@ if (!constraint) {
                                  userInfo:nil]
 ```
 
-而我们在 makeConstraints 的时候，实际调用的是 `MASViewConstraint` 这个 `MASConstraint` 子类中的实现：
+而我们在 `makeConstraints` 的时候，实际调用的是 `MASViewConstraint` 这个 `MASConstraint` 子类中的实现：
 
 ```
 - (MASConstraint * (^)(id, NSLayoutRelation))equalToWithRelation {
@@ -340,10 +319,9 @@ if (!constraint) {
 }
 ```
 
+实现为：
+
 ```
-/**
- *  Convenience initializer.
- */
 - (id)initWithView:(MAS_VIEW *)view layoutAttribute:(NSLayoutAttribute)layoutAttribute;
 ```
 
@@ -382,9 +360,6 @@ if (!constraint) {
 接下来是 `offset`：
 
 ```
-/**
- *	Modifies the NSLayoutConstraint constant
- */
 - (MASConstraint * (^)(CGFloat offset))offset;
 ```
 
@@ -414,11 +389,6 @@ return [constraintMaker install];
 先来看一下 `install` 方法：
 
 ```
-/**
- *	Calls install method on any MASConstraints which have been created by this maker
- *
- *	@return	an array of all the installed MASConstraints
- */
 - (NSArray *)install;
 ```
 
@@ -443,11 +413,10 @@ return [constraintMaker install];
 首先，会对 `constraints` 属性做一份 `copy`，之后遍历 `constraints` 中的所有 `MASConstraint` 及其子类型的属性，并调用其 `install` 方法：
 
 ```
-/**
- *	Creates a NSLayoutConstraint and adds it to the appropriate view.
- */
 - (void)install;
 ```
+
+实现为：
 
 ```
 - (void)install {
@@ -672,9 +641,7 @@ if (self.secondViewAttribute.view) {
 
 递归求解。
 
-如果设置的是一个尺寸约束（`firstViewAttribute.isSizeAttribute`），则施加在 `firstViewAttribute.view` 上。
-
-否则施加在 `firstViewAttribute.view.superView` 上。
+如果设置的是一个尺寸约束（`firstViewAttribute.isSizeAttribute`），则施加在 `firstViewAttribute.view` 上。否则施加在 `firstViewAttribute.view.superView` 上。
 
 ```
 MASLayoutConstraint *existingConstraint = nil;
