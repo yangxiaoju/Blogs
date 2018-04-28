@@ -9,20 +9,8 @@
 `Masonry` 中为我们准备了设置约束不相等时的方法：
 
 ``` 
-/**
- *	Sets the constraint relation to NSLayoutRelationGreaterThanOrEqual
- *  returns a block which accepts one of the following:
- *    MASViewAttribute, UIView, NSValue, NSArray
- *  see readme for more details.
- */
 - (MASConstraint * (^)(id attr))greaterThanOrEqualTo;
 
-/**
- *	Sets the constraint relation to NSLayoutRelationLessThanOrEqual
- *  returns a block which accepts one of the following:
- *    MASViewAttribute, UIView, NSValue, NSArray
- *  see readme for more details.
- */
 - (MASConstraint * (^)(id attr))lessThanOrEqualTo;
 ```
 
@@ -58,12 +46,6 @@
 由上面的代码我们可以看到，传递给 `equalToWithRelation` 方法的 `attribute` 参数是一个 `id` 类型的对象，这意味每次调用 `.equalTo` 方法时，需要对纯数字的参数进行包装。若是简单的数字约束还好，但是针对 `size` 等需要传递结构体才能解决的约束，就显得很繁琐了。`Masonry` 为我们提供了一些宏用来解决这个问题：
 
 ```
-/**
- *  Convenience auto-boxing macros for MASConstraint methods.
- *
- *  Defining MAS_SHORTHAND_GLOBALS will turn on auto-boxing for default syntax.
- *  A potential drawback of this is that the unprefixed macros will appear in global scope.
- */
 #define mas_equalTo(...)                 equalTo(MASBoxValue((__VA_ARGS__)))
 #define mas_greaterThanOrEqualTo(...)    greaterThanOrEqualTo(MASBoxValue((__VA_ARGS__)))
 #define mas_lessThanOrEqualTo(...)       lessThanOrEqualTo(MASBoxValue((__VA_ARGS__)))
@@ -97,10 +79,6 @@
 转而调用了一个名为 `_MASBoxValue` 的函数：
 
 ```
-/**
- *  Given a scalar or struct value, wraps it in NSValue
- *  Based on EXPObjectify: https://github.com/specta/expecta
- */
 static inline id _MASBoxValue(const char *type, ...) {
     va_list v;
     va_start(v, type);
@@ -230,13 +208,6 @@ make.height.equalTo(@[view1.mas_height, view2.mas_height]);
 对于数组类型的参数 `attribute` 参数，会落入第一个分支，将数据中的参数一一拆出来，分别生成 `MASViewConstraint` 类型的对象，再通过这些对象来初始化一个 `MASCompositeConstraint` 类型的对象（`compositeConstraint`），接下来我们看一下 `MASCompositeConstraint` 的初始化方法：
 
 ```
-/**
- *	Creates a composite with a predefined array of children
- *
- *	@param	children	child MASConstraints
- *
- *	@return	a composite constraint
- */
 - (id)initWithChildren:(NSArray *)children;
 ```
 
@@ -290,9 +261,6 @@ make.left.greaterThanOrEqualTo(label.mas_left).with.priorityLow();
 通过调用 `.priorityLow()` 方法，就为这条约束设置了低优先级，下面是该方法的声明和实现：
 
 ```
-/**
- *	Sets the NSLayoutConstraint priority to MASLayoutPriorityLow
- */
 - (MASConstraint * (^)(void))priorityLow;
 ```
 
@@ -416,15 +384,6 @@ make.edges.equalTo(view2);
 ### mas_updateConstraints
 
 ```
-/**
- *  Creates a MASConstraintMaker with the callee view.
- *  Any constraints defined are added to the view or the appropriate superview once the block has finished executing.
- *  If an existing constraint exists then it will be updated instead.
- *
- *  @param block scope within which you can build up the constraints which you wish to apply to the view.
- *
- *  @return Array of created/updated MASConstraints
- */
 - (NSArray *)mas_updateConstraints:(void(NS_NOESCAPE ^)(MASConstraintMaker *make))block;
 ```
 
@@ -506,15 +465,6 @@ make.edges.equalTo(view2);
 ### mas_remakeConstraints
 
 ```
-/**
- *  Creates a MASConstraintMaker with the callee view.
- *  Any constraints defined are added to the view or the appropriate superview once the block has finished executing.
- *  All constraints previously installed for the view will be removed.
- *
- *  @param block scope within which you can build up the constraints which you wish to apply to the view.
- *
- *  @return Array of created/updated MASConstraints
- */
 - (NSArray *)mas_remakeConstraints:(void(NS_NOESCAPE ^)(MASConstraintMaker *make))block;
 ```
 
