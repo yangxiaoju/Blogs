@@ -82,3 +82,5 @@ UIKit 和 Core Graphics 有许多互补的图形功能，包括图形上下文�
 ### 参见
 
 有关打印的完整示例，请参阅 [PrintPhoto: Using the Printing API with Photos](https://developer.apple.com/library/content/samplecode/PrintPhoto/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010366)，[Sample Print Page Renderer](https://developer.apple.com/library/content/samplecode/Recipes_+_Printing/Introduction/Intro.html#//apple_ref/doc/uid/DTS40011098) 和 [UIKit Printing with UIPrintInteractionController and UIViewPrintFormatter](https://developer.apple.com/library/content/samplecode/PrintWebView/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010311) 示例代码项目。
+
+> 如果觉得我写的还不错，请关注我的微博[@小橘爷](http://weibo.com/yanghaoyu0225)，最新文章即时推送~
