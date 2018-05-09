@@ -44,13 +44,13 @@ iOS 本机图形系统结合了三种主要技术：UIKit，Core Graphics 和 Co
 - UIKit 有一个默认坐标系，其中绘图的原点位于视图的左上角; 正值向下和向右延伸。 你可以通过修改将视图的坐标空间映射到设备屏幕的当前转换矩阵来更改默认坐标系相对于基础视图或窗口的大小，方向和位置。
 - 在 iOS 中，测量以点为单位的距离的逻辑坐标空间不等于以像素为单位的设备坐标空间。 为了更高的精度，点以浮点值表示。
 
-> 相关章节：iOS 绘图概念
+> 相关章节：[iOS 绘图概念](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AiOS%20%E7%BB%98%E5%9B%BE%E6%A6%82%E5%BF%B5/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AiOS%20%E7%BB%98%E5%9B%BE%E6%A6%82%E5%BF%B5.md)
 
 #### UIKit，Core Graphics 和 Core Animation 为你的应用程序提供许多绘图工具
 
 UIKit 和 Core Graphics 有许多互补的图形功能，包括图形上下文，Bézier路径，图像，位图，透明图层，颜色，字体，PDF 内容以及绘图矩形和裁剪区域。 此外，Core Graphics 还具有与线条属性，颜色空间，图案颜色，渐变，阴影和图像蒙版相关的功能。 Core Animation 框架使你能够通过操纵和显示使用其他技术创建的内容来创建流畅的动画。
 
-> 相关章节：iOS 绘图概念，使用 Bézier 路径绘制图形，绘制和创建图像，生成 PDF 内容
+> 相关章节：[iOS 绘图概念](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AiOS%20%E7%BB%98%E5%9B%BE%E6%A6%82%E5%BF%B5/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AiOS%20%E7%BB%98%E5%9B%BE%E6%A6%82%E5%BF%B5.md)，[使用 Bézier 路径绘制图形](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E4%BD%BF%E7%94%A8%20B%C3%A9zier%20%E8%B7%AF%E5%BE%84%E7%BB%98%E5%88%B6%E5%BD%A2%E7%8A%B6.md)，[绘制和创建图像](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E7%BB%98%E5%88%B6%E5%92%8C%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%83%8F.md)，[生成 PDF 内容](https://developer.apple.com/library/content/documentation/2DDrawing/Conceptual/DrawingPrintingiOS/GeneratingPDF/GeneratingPDF.html#//apple_ref/doc/uid/TP40010156-CH10-SW1)
 
 #### 应用可以绘制成离屏位图或 PDF
 
@@ -61,7 +61,7 @@ UIKit 和 Core Graphics 有许多互补的图形功能，包括图形上下文�
 
 创建屏幕外上下文后，可以像绘制自定义视图的 [drawRect:](https://developer.apple.com/documentation/uikit/uiview/1622529-drawrect) 方法一样绘制屏幕上下文。
 
-> 相关章节：绘制和创建图像，[生成 PDF 内容](https://developer.apple.com/library/content/documentation/2DDrawing/Conceptual/DrawingPrintingiOS/GeneratingPDF/GeneratingPDF.html#//apple_ref/doc/uid/TP40010156-CH10-SW1)
+> 相关章节：[绘制和创建图像](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97/%E9%80%82%E7%94%A8%E4%BA%8E%20iOS%20%E7%9A%84%E7%BB%98%E5%9B%BE%E5%92%8C%E6%89%93%E5%8D%B0%E6%8C%87%E5%8D%97%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E7%BB%98%E5%88%B6%E5%92%8C%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%83%8F.md)，[生成 PDF 内容](https://developer.apple.com/library/content/documentation/2DDrawing/Conceptual/DrawingPrintingiOS/GeneratingPDF/GeneratingPDF.html#//apple_ref/doc/uid/TP40010156-CH10-SW1)
 
 #### 应用程序有一系列打印内容的选项
 
