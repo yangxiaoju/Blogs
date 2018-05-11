@@ -14,25 +14,25 @@ Core Animation 是 iOS 和 OS X 上可用的图形渲染和动画基础结构，
 
 Core Animation 本身不是一个绘图系统。 它是用于在硬件中合成和操纵应用内容的基础设施。 这个基础架构的核心是 layer 对象，你可以使用它来管理和操作你的内容。 layer 将你的内容捕获到位图中，该位图可由图形硬件轻松操纵。 在大多数应用程序中，layers 用作管理视图内容的方式，但你也可以根据需要创建独立图层。
 
-> 相关章节：Core Animation 基础，设置 layer 对象
+> 相关章节：[Core Animation 基础](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9ACore%20Animation%20%E5%9F%BA%E7%A1%80.md)，[设置 layer 对象](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AE%BE%E7%BD%AE%E5%9B%BE%E5%B1%82%E5%AF%B9%E8%B1%A1.md)
 
 ### Layer 修改触发动画
 
 大多数使用 Core Animation 创建的动画都涉及修改 layer 的属性。 与视图类似，layer 对象具有 bounds rectangle，position onscreen，opacity，transform 以及可以修改的许多其他可视化属性。 对于大多数这些属性，更改属性的值会导致创建隐式动画，从而将图层从旧值动画到新值。 你还可以在需要更多控制最终动画行为的情况下，明确地动画这些属性。
 
-> 相关章节：动画 layer 内容，高级动画技巧，layer 样式属性动画，动画属性
+> 相关章节：[动画 layer 内容](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%8A%A8%E7%94%BB%E5%9B%BE%E5%B1%82%E5%86%85%E5%AE%B9.md)，[高级动画技巧](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9A%E9%AB%98%E7%BA%A7%E5%8A%A8%E7%94%BB%E6%8A%80%E5%B7%A7.md)，[layer 样式属性动画](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9A%E9%99%84%E5%BD%95%20A%20%E5%9B%BE%E5%B1%82%E6%A0%B7%E5%BC%8F%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB.md)，[动画属性](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9A%E9%99%84%E5%BD%95%20B%20%E5%8A%A8%E7%94%BB%E5%B1%9E%E6%80%A7.md)
 
 ### Layer 可以组织成层次结构
 
 可以分层排列 layers 以创建父子关系。 Layers 的排列会影响他们以类似于视图的方式管理的视觉内容。 附加到视图的一组 layers 的层次结构反映了相应的视图层次结构。 你还可以将独立图层添加到 layer 层次结构中，以扩展应用程序的可视内容，而不仅仅是视图。
 
-> 相关章节：构建层次结构
+> 相关章节：[构建层次结构](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9A%E6%9E%84%E5%BB%BA%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84.md)
 
 ### 操作让你更改 Layers 的默认行为
 
 隐式层动画是使用动作对象实现的，动作对象是实现预定义接口的通用对象。 Core Animation 使用动作对象来实现通常与图层关联的默认动画集合。 你可以创建自己的动作对象来实现自定义动画或使用它们来实现其他类型的行为。 然后将你的操作对象分配给图层的某个属性。 当该属性更改时，Core Animation 将检索你的操作对象并告诉它执行其操作。
 
-> 相关章节：更改 layer 的默认行为
+> 相关章节：[更改 layer 的默认行为](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97/Core%20Animation%20%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97%EF%BC%88%E4%B8%83%EF%BC%89%EF%BC%9A%E6%9B%B4%E6%94%B9%E5%9B%BE%E5%B1%82%E7%9A%84%E9%BB%98%E8%AE%A4%E8%A1%8C%E4%B8%BA.md)
 
 ## 如何使用此文档
 
