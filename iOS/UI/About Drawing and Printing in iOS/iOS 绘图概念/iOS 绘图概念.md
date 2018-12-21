@@ -169,7 +169,7 @@ UIKit 通过为图形相关操作提供一组集中的类来构建 Quartz 的基
 在调用 drawRect: 方法之前，视图对象会创建图形上下文并将其设置为当前上下文。此上下文仅存在于 drawRect: call 的生命周期中。你可以通过调用 UIGraphicsGetCurrentContext 函数来检索指向此图形上下文的指针。此函数返回对 CGContextRef 类型的引用，你将其传递给 Core Graphics 函数以修改当前图形状态。表1-1列出了用于设置图形状态不同方面的主要功能。有关函数的完整列表，请参阅 CGContext Reference。该表还列出了 UIKit 存在的替代方案。
 
 表 1-1 用于修改图形状态的 Core graphics 函数
-![]()
+![](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/About%20Drawing%20and%20Printing%20in%20iOS/iOS%20%E7%BB%98%E5%9B%BE%E6%A6%82%E5%BF%B5/Table%201-1.png?raw=true)
 
 图形上下文包含一个栈用于保存的图形状态。当 Quartz 创建图形上下文时，栈为空。使用 CGContextSaveGState 函数将当前图形状态的副本推送到堆栈。此后，对图形状态所做的修改会影响后续的绘图操作，但不会影响存储在栈中的副本。完成修改后，可以使用 CGContextRestoreGState 函数将保存的状态弹出栈顶部，从而返回到先前的图形状态。以这种方式 pushing 和 poping 图形状态是返回先前状态的快速方法，并且无需单独撤消每个状态更改。它也是将状态的某些方面（例如剪切路径）恢复到其原始设置的唯一方法。
 
