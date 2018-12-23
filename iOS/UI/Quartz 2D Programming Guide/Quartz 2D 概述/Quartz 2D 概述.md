@@ -81,7 +81,7 @@ Quartz 根据当前图形状态中的参数修改绘制操作的结果。图形�
 请注意，并非当前绘图环境的所有方面都是图形状态的元素。例如，当前路径不被视为图形状态的一部分，因此在调用函数 CGContextSaveGState 时不会保存。
 
 表 1-1 列出了调用此函数时保存的图形状态参数。
-![]()
+![](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/Quartz%202D%20Programming%20Guide/Quartz%202D%20%E6%A6%82%E8%BF%B0/Table%201-1.png?raw=true)
 
 ## Quartz 2D 坐标系
 
