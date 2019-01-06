@@ -178,7 +178,7 @@ UIKit 通过为图形相关操作提供一组集中的类来构建 Quartz 的基
 
 表 1-1 用于修改图形状态的核心图形功能
 
-![]()
+![](https://github.com/yangxiaoju/Blogs/blob/master/iOS/UI/Drawing%20and%20Printing%20Guide%20for%20iOS/iOS%20%E7%BB%98%E5%9B%BE%E6%A6%82%E5%BF%B5/Table%201-1.png?raw=true)
 
 图形上下文包含一堆已保存的图形状态。当 Quartz 创建图形上下文时，栈为空。使用 CGContextSaveGState 函数将当前图形状态的副本推送到堆栈。此后，对图形状态所做的修改会影响后续的绘图操作，但不会影响存储在栈中的副本。完成修改后，可以使用 CGContextRestoreGState 函数将保存的状态弹出栈顶部，从而返回到先前的图形状态。以这种方式推送和弹出图形状态是返回先前状态的快速方法，并且无需单独撤消每个状态更改。它也是将状态的某些方面（例如剪切路径）恢复到其原始设置的唯一方法。
 
