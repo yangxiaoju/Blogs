@@ -2,7 +2,7 @@
 
 ## Objective-C
 
-[论如何在 Objective-C 中优雅的使用常量](iOS/Objective-C/论如何在 Objective-C 中优雅的使用常量.md)
+[论如何在 Objective-C 中优雅的使用常量](iOS/Objective-C/论如何在%20Objective-C%20中优雅的使用常量.md)
 
 [内存管理](https://github.com/yangxiaoju/Blogs/blob/master/iOS/Objective-C/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.md)
 
