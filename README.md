@@ -2,7 +2,7 @@
 
 ## Objective-C
 
-[extern, static, const 和 inline](https://github.com/yangxiaoju/Blogs/blob/master/iOS/Objective-C/extern%2C%20static%2C%20const%20%E5%92%8C%20inline.md)
+[论如何在 Objective-C 中优雅的使用常量](iOS/Objective-C/论如何在 Objective-C 中优雅的使用常量.md)
 
 [内存管理](https://github.com/yangxiaoju/Blogs/blob/master/iOS/Objective-C/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86.md)
 
